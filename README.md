@@ -25,7 +25,7 @@ Mac OS: https://docs.docker.com/docker-for-mac/install/
 docker pull hcp4715/rdock:sperel           # This is the image for SPEReliability project
 ```
 
-### Step 3: run the docker image:
+### Step 3: run the docker image
 
 ```
 docker run -e PASSWORD=hulab1234 --cpus=4 -it --rm -p 8787:8787 -v /home/hcp4715/docker/workingDir:/home/rstudio/work hcp4715/rdock:sperel 
@@ -66,8 +66,10 @@ hcp4715/rdock:sperel ---- The docker image to run. Note that you shoud include t
 [cont-init.d] done.
 [services.d] starting services
 [services.d] done.
+...
 ```
 
+### Step 4: Access Rstudio in browser.
 Then, open your broswer (e.g., firefox, chrome), and try one of the following url in the address:
 
 `localhost:8787`
