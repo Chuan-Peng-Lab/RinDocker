@@ -1,16 +1,13 @@
-# rstudio_docker (working env of the lab)
+# R in docker for the lab
 
-This repo is to ensure reproducibility of analyses from [Hu Chuan-Peng](https://huchuanpeng.com/)'s team. This [tutorial](http://ropenscilabs.github.io/r-docker-tutorial/) helped us to build and maintain this repo, many thanks.
+This repo is to ensure reproducibility of the lab. This [tutorial](http://ropenscilabs.github.io/r-docker-tutorial/) helped us to build and maintain this repo, many thanks.
 
-The primary purpose of this docker image is to ensure my collaborators can run `brms` across different platforms, so that they don't need to worry about the installation problems.
-
-This docker image can be used for Bayesian analyses, it includes the following packages: `brms`, `cmdstanr`, `tidybayes`. Also, it includes `lme4`, `tidyverse`, `metafor`. I will include more packages in the future. You can also easily install new packages and save the docker images locally, please see the [tutorial](http://ropenscilabs.github.io/r-docker-tutorial/) I mentioned above.
 
 ## About docker
 
 Please see [here](https://www.docker.com/resources/what-container) for why using docker.
 
-## How to use this docker images
+## How to use docker images
 
 ### Step 1: install docker
 
@@ -25,19 +22,18 @@ Mac OS: https://docs.docker.com/docker-for-mac/install/
 ### Step 2: pull this image form dock hub
 
 ```
-docker pull hcp4715/rstudio_bayes            # this doesn't work, because docker will try to find a image "hcp4715/rstudio_bayes:latest"
-docker pull hcp4715/rstudio_bayes:cmdstanr   # docker will try to find a image "hcp4715/rstudio_bayes:cmdstanr"
+docker pull hcp4715/rdock:sperel           # This is the image for SPEReliability project
 ```
 
 ### Step 3: run the docker image:
 
 ```
-docker run -e PASSWORD=hcplab2021 --cpus=4 -it --rm -p 8787:8787 -v /home/hcp4715/docker_R:/home/rstudio/tutorial hcp4715/rstudio_bayes:cmdstanr
+docker run -e PASSWORD=hulab1234 --cpus=4 -it --rm -p 8787:8787 -v /home/hcp4715/docker/workingDir:/home/rstudio/work hcp4715/rdock:sperel 
 ```
 
 docker run ---- Run a docker image in a container
 
--e PASSWORD=hcplab2021 ---- set a password for rstudio, you can set your own password.
+-e PASSWORD=hulab1234 ---- set a password for rstudio, you can set your own password.
 
 -it ---- Keep STDIN open even if not attached
 
@@ -47,15 +43,15 @@ docker run ---- Run a docker image in a container
 
 -v ---- Mount a folder to the container
 
-/home/hcp4715/docker_R ---- The directory of a local folder where I stored my data. [For Linux]
+/home/hcp4715/docker/workingDir ---- The directory of a local folder where I stored my data. [For Linux]
 
-/d/hcp4715/docker_R ---- The directory of a local folder under drive D. It appears as D:\hcp4715\docker_R in windows system.
+/d/hcp4715/docker/workingDir ---- The directory of a local folder under drive D. It appears as D:\hcp4715\docker_R in windows system.
 
-/home/rstudio/tutorial ---- The directory inside the docker image (the mounting point of the local folder in the docker image). Note that the docker container itself likes a mini virtual linux system, so the file system inside it is linux style.
+/home/rstudio/work ---- The directory inside the docker image (the mounting point of the local folder in the docker image). Note that the docker container itself likes a mini virtual linux system, so the file system inside it is linux style.
 
 -p ---- Publish a container’s port(s) to the host
 
-hcp4715/rstudio_bayes:cmdstanr ---- The docker image to run. Note that you shoud include the tag `:cmdstanr` part, otherwise docker will instead use "hcp4715/rstudio_bayes:latest".
+hcp4715/rdock:sperel ---- The docker image to run. Note that you shoud include the tag `:cmdstanr` part, otherwise docker will instead use "hcp4715/rstudio_bayes:latest".
 
 **After running the code above, you shall see output as below:**
 
@@ -82,7 +78,7 @@ Then, open your broswer (e.g., firefox, chrome), and try one of the following ur
 You will be asked to input username and password
 
 Username: rstudio
-Password: hcplab2021
+Password: hulab1234
 
 Now, you will see the familiar interface of rstudio! In the broswer!
 
@@ -91,24 +87,7 @@ Now, you will see the familiar interface of rstudio! In the broswer!
 Run the code below to test whether the image works
 ```
 # load the libraries
-library(brms)
 library(tidyverse)
-
-# fit a testing model from brms, use rstan as the backend
-fit1 <- brm(count ~ zAge + zBase * Trt + (1|patient), 
-	    cores = parallel::detectCores(), # detect how many cpus/threads are available
-	    chains = 4,
-        data = epilepsy, family = poisson())
-
-# fit a testing model from brms, use cmdstanr as the backend
-fit1 <- brm(count ~ zAge + zBase * Trt + (1|patient), 
-	    cores = parallel::detectCores(), # detect how many cpus/threads are available
-	    chains = 4,  
-		backend = 'cmdstanr',
-        data = epilepsy, family = poisson())
-
-# check the summary of the model
-summary(fit1)
 ```
 
 ### Build docker image from Dockerfile
@@ -122,4 +101,4 @@ Replace the `your_user_name/your_docker_image_name:your_tag` part with your own 
 
 ### Final note
 
-Docker is not perfect (yet). First, this docker image doesn't work on Mac with M1 chip. Second, on some Mac book, this docker image does not work perfectly: when running `brms`, it can only work when using `cmdstanr` as the backend, not `rstan`. See issues for the details. 
+Docker is not perfect (yet). 
