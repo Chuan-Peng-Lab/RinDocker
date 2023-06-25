@@ -2,6 +2,8 @@
 
 This repo is to ensure reproducibility of the lab. This [tutorial](http://ropenscilabs.github.io/r-docker-tutorial/) helped us to build and maintain this repo, many thanks.
 
+Associated with docker images: https://hub.docker.com/r/hcp4715/rdock
+
 
 ## About docker
 

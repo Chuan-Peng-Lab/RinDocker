@@ -19,7 +19,7 @@ RUN R -e "install.packages(c('foreach', 'parallel', 'iterators', 'doParallel'), 
 RUN R -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
 RUN R -e "devtools::install_github('hauselin/hausekeep')"
 RUN R -e "devtools::install_github('yuki-961004/yukiSH')"
-RUN R -e "devtools::install_github('yuki-961004/yukiBP')"
+RUN R -e "devtools::install_github('yuki-961004/yukiBP@cdb5b0764438306aefe2687b7c1993a3e8059161')"
 
 # RUN R -e "install.packages('tinytex', repos = 'http://cran.us.r-project.org')"
 # RUN R -e "tinytex::install_tinytex()"
