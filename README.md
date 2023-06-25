@@ -4,7 +4,6 @@ This repo is to ensure reproducibility of the lab. This [tutorial](http://ropens
 
 Associated with docker images: https://hub.docker.com/r/hcp4715/rdock
 
-
 ## About docker
 
 Please see [here](https://www.docker.com/resources/what-container) for why using docker.
